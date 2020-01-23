@@ -11,3 +11,6 @@ This is a piece of code that can give a best move in a ConnectFour game using Al
 
 * Output:
 ...A single number between 0 and 6 to indicates next best move for current player.
+
+* Tournament Result: 9th out of 80+ students
+![Result](https://github.com/Rezxx/ConnectFour_Solver/blob/master/Result.png)

@@ -109,6 +109,10 @@ public class State {
 	}
 
 	public void play(int move){
+        if(height[move] >= HEIGHT){
+            System.out.println("Can't play here.\n");
+            return;
+        }
 		board[height[move]][move] = current_player;
 		height[move]++;
 		current_depth++;

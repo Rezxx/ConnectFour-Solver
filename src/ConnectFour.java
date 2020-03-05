@@ -8,41 +8,9 @@ public class ConnectFour {
 	public static boolean timeout = false;
 	public static int path = 0;
 	public static int ordered[] = new int[WIDTH];
-	//public static ArrayList<Integer> ordered = new ArrayList<Integer>();
 	public static long startTime = System.currentTimeMillis();
 	
 	public static int alphaBeta(State s, int alpha, int beta) {
-		//ArrayList<Integer> copy = (ArrayList<Integer>) ordered.clone();
-		
-//		HashSet<Integer> ordered = new HashSet<Integer>(WIDTH);
-//		if(last_own != -1 && last_op != -1) {
-//			ordered.add(last_own);
-//			if(last_own - 1 >= 0) {
-//				ordered.add(last_own - 1);
-//			}
-//			
-//			if(last_own + 1 < WIDTH) {
-//				ordered.add(last_own + 1);
-//			}
-//			
-//			ordered.add(last_op);
-//			if(last_op - 1 >= 0) {
-//				ordered.add(last_op - 1);
-//			}
-//			
-//			if(last_op + 1 < WIDTH) {
-//				ordered.add(last_op + 1);
-//			}
-//			
-//			for(int i = 0; i < WIDTH; i++) {
-//				ordered.add(i);
-//			}
-//		}else {
-//			for(int i : central) {
-//				ordered.add(i);
-//			}
-//		}
-		
 		
 	    nodes++;
 	    if(s.isLastLevel()){
@@ -64,14 +32,12 @@ public class ConnectFour {
 	    //when the opponent is winning
 	    if(s.isFirstLevel()) {
 		    State so = s.copy();
-		    //System.out.println(so.current_player);
 	    	so.current_player *= -1;
 		    for(int i = 0; i < WIDTH; i++) {
 		    	if(so.isValid(i) && so.isWinning(i)) {
 	            	nodes++;
 	            	path = i;
 	            	s.play(i);
-	            	//System.out.println("Choose: " + i);
 	                return s.evaluation();
 		    	}
 		    }
@@ -143,63 +109,67 @@ public class ConnectFour {
 	        bit *= -1;
 	    }
 	    
-	    int i = 0;
+	    // For tournament only
+	    // int i = 0;
 	    
-	    
-	    while(System.currentTimeMillis() - startTime < 980) {
-	    	State state = new State(args[0], args[1], i);
-	    	alphaBeta(state, Integer.MIN_VALUE, Integer.MAX_VALUE);
-	    	if(timeout) {
-	    		path = last_path;
-	    	}else {
-	    		last_path = path;
-	    	}
+	    // while(System.currentTimeMillis() - startTime < 980) {
+	    // 	State state = new State(args[0], args[1], i);
+	    // 	alphaBeta(state, Integer.MIN_VALUE, Integer.MAX_VALUE);
+	    // 	if(timeout) {
+	    // 		path = last_path;
+	    // 	}else {
+	    // 		last_path = path;
+	    // 	}
 	    	
-	    	i++;
-	    }
+	    // 	i++;
+	    // }
 	    
-	    System.out.println(path);
-//	    System.out.println("depth: " + (i - 1));
-//	    System.out.println("path: " + path);
-//	    System.out.println("explored nodes: " + nodes);
-//	    long endTime = System.currentTimeMillis();
-//	    System.out.println("time: " + (endTime - startTime + "ms"));
-//	    System.out.println(args[1] + "'s turn!");
-//	    
-//	    
-//	    State state2 = new State(args[0], args[1], 0);
-//	    Scanner sc = new Scanner(System.in);
-//	    
-//	    while(sc.hasNext()) {
-//	    	String command = sc.nextLine();
-//	    	String[] c = command.split(" ");
-//	    	state2.play(Integer.parseInt(c[1]));
-//	    	state2.print();
-//	    	startTime = System.currentTimeMillis();
-//	    	int j = 0;
-//	    	nodes = 0;
-//	    	path = 0;
-//	    	last_path = 0;
-//	    	timeout = false;
-//	    	State state3 = state2.copy();
-//	    	state3.current_depth = 0;
-//	    	while(System.currentTimeMillis() - startTime < 995) {
-//		    	state3.max_depth = j;
-//		    	alphaBeta(state3, Integer.MIN_VALUE, Integer.MAX_VALUE);
-//		    	if(timeout) {
-//		    		path = last_path;
-//		    	}else {
-//		    		last_path = path;
-//		    		j++;
-//		    	}
-//		    }
-//	    	
-//	    	System.out.println("depth: " + j);
-//		    System.out.println("path: " + path);
-//		    System.out.println("explored nodes: " + nodes);
-//		    endTime = System.currentTimeMillis();
-//		    System.out.println("time: " + (endTime - startTime + "ms"));
-//		    System.out.println((state2.current_player == 1 ? "red" : "yellow") + "'s turn!");
-//	    }
+
+	    // System.out.println(path);
+	    // System.out.println("depth: " + (i - 1));
+	    // System.out.println("path: " + path);
+	    // System.out.println("explored nodes: " + nodes);
+	    // long endTime = System.currentTimeMillis();
+	    // System.out.println("time: " + (endTime - startTime + "ms"));
+	    // System.out.println(args[1] + "'s turn!");
+	    
+	    
+	    State state2 = new State(args[0], args[1], 0);
+	    state2.print();
+		System.out.println((state2.current_player == 1 ? "Red" : "Yellow") + "'s turn!");
+	    Scanner sc = new Scanner(System.in);
+	    
+	    while(sc.hasNext()) {
+	    	String command = sc.nextLine();
+	    	System.out.println();
+	    	String[] c = command.split(" ");
+	    	state2.play(Integer.parseInt(c[0]));
+	    	state2.print();
+	    	startTime = System.currentTimeMillis();
+	    	int j = 0;
+	    	nodes = 0;
+	    	path = 0;
+	    	last_path = 0;
+	    	timeout = false;
+	    	State state3 = state2.copy();
+	    	state3.current_depth = 0;
+	    	while(System.currentTimeMillis() - startTime < 995) {
+		    	state3.max_depth = j;
+		    	alphaBeta(state3, Integer.MIN_VALUE, Integer.MAX_VALUE);
+		    	if(timeout) {
+		    		path = last_path;
+		    	}else {
+		    		last_path = path;
+		    		j++;
+		    	}
+		    }
+	    	
+	    	// System.out.println("Explored Depth: " + j);
+	    	System.out.println((state2.current_player == 1 ? "Red" : "Yellow") + "'s turn!");
+		    System.out.println("Best Move: " + path);
+		    // System.out.println("explored nodes: " + nodes);
+		    // long endTime = System.currentTimeMillis();
+		    // System.out.println("Evaluation Time: " + (endTime - startTime + "ms"));
+	    }
 	}
 }
